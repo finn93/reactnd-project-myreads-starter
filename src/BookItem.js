@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+const bookshelfs = [
+	{name: 'Currently Reading', value: 'currentlyReading'},
+	{name: 'Want to Read', value: 'wantToRead'},
+	{name: 'Read', value: 'read'},
+	{name: 'None', value: 'none'},
+];
+
 export default class BookItem extends Component {
 
 	static propTypes = {
@@ -9,10 +16,12 @@ export default class BookItem extends Component {
 		backgroundImage: PropTypes.string,
 		title: PropTypes.string,
 		authors: PropTypes.array,
+		bookshelf: PropTypes.string,
+		changeShelf: PropTypes.func,
 	};
 
 	render() {
-		const { backgroundImage, title, authors } = this.props;
+		const { backgroundImage, title, authors, bookshelf, changeShelf } = this.props;
 		return (
 			<div className="book">
 				<div className="book-top">
@@ -25,12 +34,9 @@ export default class BookItem extends Component {
 						}}
 					/>
 					<div className="book-shelf-changer">
-						<select>
+						<select defaultValue={bookshelf} onChange={changeShelf()} >
 							<option value="none" disabled>Move to...</option>
-							<option value="currentlyReading">Currently Reading</option>
-							<option value="wantToRead">Want to Read</option>
-							<option value="read">Read</option>
-							<option value="none">None</option>
+							{bookshelfs.map(n => (<option key={n.value} value={n.value}>{n.name}</option>))}
 						</select>
 					</div>
 				</div>

@@ -12,7 +12,6 @@ class HomePage extends Component {
 		readBooks: [],
 	};
 
-
 	componentDidMount() {
 		BooksAPI.getAll().then((books) => {
 			console.log(books);
@@ -23,6 +22,10 @@ class HomePage extends Component {
 				readBooks: books.filter((b) => b.shelf === 'read'),
 			})
 		})
+	}
+
+	_changeShelf = (e) => {
+		  console.log(e.target.value);
 	}
 
 	render() {
@@ -37,6 +40,7 @@ class HomePage extends Component {
 						<Bookshelf
 							title={'Currently Reading'}
 							books={readingBooks}
+							changeShelf={this._changeShelf}
 						/>
 						<Bookshelf
 							title={'Want to Read'}
